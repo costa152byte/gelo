@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Artgelo{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/artgelo.css' %}">
+<style>
+    .stat-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 15px var(--sombra);
+        transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px var(--sombra-forte);
+    }
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--azul-escuro);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="h2 text-gelo-escuro mb-4">📊 Dashboard</h1>
+    
+    <!-- Estatísticas -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <div class="stat-number">{{ total_pedidos }}</div>
+                <div class="text-muted small">Total de Pedidos</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <div class="stat-number text-warning">{{ pedidos_pendentes }}</div>
+                <div class="text-muted small">Pendentes</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <div class="stat-number text-primary">{{ pedidos_em_rota }}</div>
+                <div class="text-muted small">Em Rota</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <div class="stat-number text-success">{{ pedidos_entregues }}</div>
+                <div class="text-muted small">Entregues</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mais estatísticas -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <div class="stat-number">R$ {{ valor_total|floatformat:2 }}</div>
+                <div class="text-muted small">Faturamento Total</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <div class="stat-number">{{ total_membros }}</div>
+                <div class="text-muted small">Membros</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <div class="stat-number">{{ rotas_ativas }}</div>
+                <div class="text-muted small">Rotas Ativas</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <div class="stat-number">{{ agendamentos_hoje }}</div>
+                <div class="text-muted small">Agendamentos Hoje</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Últimos pedidos -->
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="stat-card">
+                <h5 class="mb-3">📋 Últimos Pedidos</h5>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Status</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pedido in ultimos_pedidos %}
+                            <tr>
+                                <td>{{ pedido.cliente.nome_completo }}</td>
+                                <td>
+                                    <span class="badge badge-status status-{{ pedido.status }}">
+                                        {{ pedido.get_status_display }}
+                                    </span>
+                                </td>
+                                <td>R$ {{ pedido.valor_total|floatformat:2 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="stat-card">
+                <h5 class="mb-3">🧹 Próximos Agendamentos</h5>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Data/Hora</th>
+                                <th>Tipo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for agenda in proximos_agendamentos %}
+                            <tr>
+                                <td>{{ agenda.nome_cliente }}</td>
+                                <td>{{ agenda.data_hora|date:"d/m H:i" }}</td>
+                                <td>{{ agenda.tipo_freezer }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3" class="text-muted text-center">Nenhum agendamento próximo</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/artgelo.js' %}"></script>
+{% endblock %}

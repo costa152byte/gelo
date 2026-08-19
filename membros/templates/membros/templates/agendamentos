@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Agendar Limpeza - Artgelo{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/artgelo.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card card-gelo">
+            <div class="card-body p-4">
+                <h1 class="h4 mb-4">🧹 Agendar Limpeza de Freezer</h1>
+                
+                <form method="post" novalidate data-validate>
+                    {% csrf_token %}
+                    <div class="form-gelo">
+                        {{ form|crispy }}
+                    </div>
+                    
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="{% url 'artgelo:listar_agendamentos' %}" class="btn btn-gelo-outline">Cancelar</a>
+                        <button type="submit" class="btn btn-gelo">Agendar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/artgelo.js' %}"></script>
+{% endblock %}

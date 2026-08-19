@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Novo Pedido - Artgelo{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/artgelo.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card card-gelo">
+            <div class="card-body p-4">
+                <h1 class="h4 mb-4">📦 Criar Novo Pedido</h1>
+                
+                <form method="post" novalidate data-validate>
+                    {% csrf_token %}
+                    
+                    <!-- Informações do Pedido -->
+                    <div class="form-gelo mb-4">
+                        {{ form|crispy }}
+                    </div>
+                    
+                    <!-- Itens do Pedido -->
+                    <h5 class="mb-3">🛒 Itens do Pedido</h5>
+                    {{ itens_formset.management_form }}
+                    <div id="itens-container">
+                        {% for item_form in itens_formset %}
+                        <div class="item-pedido form-gelo mb-3 p-3">
+                            <div class="row g-3">
+                                <div class="col-md-5">
+                                    {{ item_form.produto|as_crispy_field }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ item_form.quantidade|as_crispy_field }}
+                                </div>
+                                <div class="col-md-3 d-flex align-items-end">
+                                    {% if forloop.last %}
+                                    <button type="button" class="btn btn-outline-success add-item">
+                                        <i class="bi bi-plus-circle"></i> Adicionar
+                                    </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Total -->
+                    <div class="text-end mt-3">
+                        <strong>Total:</strong>
+                        <span id="valor-total-display" class="fs-4 text-gelo-escuro">R$ 0,00</span>
+                    </div>
+                    
+                    <!-- Botões -->
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="{% url 'artgelo:listar_pedidos' %}" class="btn btn-gelo-outline">Cancelar</a>
+                        <button type="submit" class="btn btn-gelo">Salvar Pedido</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/artgelo.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Adicionar novo item
+        document.querySelector('.add-item')?.addEventListener('click', function() {
+            const container = document.getElementById('itens-container');
+            const forms = container.querySelectorAll('.item-pedido');
+            const total = forms.length;
+            
+            // Clonar o último item
+            const lastItem = forms[total - 1];
+            const newItem = lastItem.cloneNode(true);
+            
+            // Atualizar IDs e names
+            const prefix = '{{ itens_formset.prefix }}';
+            newItem.querySelectorAll('input, select').forEach(el => {
+                const name = el.name;
+                const newName = name.replace(`-${total-1}-`, `-${total}-`);
+                el.name = newName;
+                el.id = newName;
+                el.value = '';
+            });
+            
+            // Remover botão add do clone
+            const addBtn = newItem.querySelector('.add-item');
+            if (addBtn) addBtn.remove();
+            
+            container.appendChild(newItem);
+        });
+    });
+</script>
+{% endblock %}

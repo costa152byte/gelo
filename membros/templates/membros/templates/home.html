@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Artgelo - Distribuição de Gelo{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/artgelo.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Fundo 3D -->
+<div class="hero-background"></div>
+<div class="snowflakes"></div>
+
+<!-- Hero Section -->
+<section class="hero-title animate-in">
+    <h1>ARTGELO</h1>
+    <p class="subtitle">❄️ Distribuição de Gelo & Soluções em Refrigeração ❄️</p>
+</section>
+
+<!-- Barra de Serviços -->
+{% include 'partials/barra_servicos.html' %}
+
+<!-- Serviços em Destaque -->
+<section class="container py-5">
+    <h2 class="text-center text-gelo-escuro mb-5 animate-in delay-1">Nossos Serviços</h2>
+    
+    <div class="row g-4">
+        <div class="col-md-4 animate-in delay-2">
+            <div class="card card-gelo h-100">
+                <div class="card-body text-center">
+                    <div class="display-1">🧊</div>
+                    <h4 class="card-title">Gelo em Cubo</h4>
+                    <p class="card-text">Gelo de alta qualidade para bebidas, eventos e uso comercial.</p>
+                    <a href="{% url 'artgelo:listar_produtos' %}" class="btn btn-gelo">Saiba Mais</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 animate-in delay-3">
+            <div class="card card-gelo h-100">
+                <div class="card-body text-center">
+                    <div class="display-1">❄️</div>
+                    <h4 class="card-title">Gelo em Escama</h4>
+                    <p class="card-text">Ideal para pesca, conservação de alimentos e aplicações industriais.</p>
+                    <a href="{% url 'artgelo:listar_produtos' %}" class="btn btn-gelo">Saiba Mais</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 animate-in delay-4">
+            <div class="card card-gelo h-100">
+                <div class="card-body text-center">
+                    <div class="display-1">🧊</div>
+                    <h4 class="card-title">Limpeza de Freezers</h4>
+                    <p class="card-text">Serviço especializado para manter seus freezers limpos e eficientes.</p>
+                    <a href="{% url 'artgelo:criar_agendamento' %}" class="btn btn-gelo">Agendar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Botão WhatsApp Flutuante -->
+<a href="https://wa.me/5511999999999?text=Olá, estou interessado nos serviços da Artgelo!" 
+   class="btn btn-whatsapp position-fixed" 
+   style="bottom: 30px; right: 30px; border-radius: 50px; padding: 15px 25px; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3); z-index: 999;">
+   <i class="bi bi-whatsapp"></i> Fale Conosco
+</a>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/artgelo.js' %}"></script>
+{% endblock %}

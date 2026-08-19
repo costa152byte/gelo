@@ -1,0 +1,26 @@
+{% load static %}
+
+<div class="servicos-bar animate-in delay-1">
+    <div class="container">
+        <div class="servico-item" onclick="window.location.href='{% url 'artgelo:listar_produtos' %}'">
+            <span class="icon">🧊</span>
+            <span class="label">Gelo Cubo</span>
+        </div>
+        <div class="servico-item" onclick="window.location.href='{% url 'artgelo:listar_produtos' %}'">
+            <span class="icon">❄️</span>
+            <span class="label">Gelo Escama</span>
+        </div>
+        <div class="servico-item" onclick="window.location.href='{% url 'artgelo:listar_produtos' %}'">
+            <span class="icon">🧊</span>
+            <span class="label">Gelo Seco</span>
+        </div>
+        <div class="servico-item" onclick="window.location.href='{% url 'artgelo:listar_produtos' %}'">
+            <span class="icon">🧊</span>
+            <span class="label">Gelo Barras</span>
+        </div>
+        <div class="servico-item" onclick="window.location.href='{% url 'artgelo:criar_agendamento' %}'">
+            <span class="icon">🧹</span>
+            <span class="label">Limpeza Freezers</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,563 @@
+/* static/css/artgelo.css */
+
+/* ========== VARIÁVEIS ========== */
+:root {
+    --azul-gelo: #e0f7fa;
+    --azul-claro: #b2ebf2;
+    --azul-medio: #0097a7;
+    --azul-escuro: #006064;
+    --azul-profundo: #004d40;
+    --branco: #ffffff;
+    --gelo: #eceff1;
+    --sombra: rgba(0, 0, 0, 0.1);
+    --sombra-forte: rgba(0, 0, 0, 0.2);
+}
+
+/* ========== RESET E BASE ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--azul-gelo) 0%, var(--azul-claro) 50%, var(--azul-medio) 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ========== FUNDO 3D COM EFEITO GELO ========== */
+.hero-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    background: 
+        radial-gradient(ellipse at 20% 50%, rgba(255, 255, 255, 0.8) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(255, 255, 255, 0.6) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(255, 255, 255, 0.4) 0%, transparent 40%),
+        linear-gradient(135deg, #e0f7fa 0%, #80deea 30%, #26c6da 60%, #0097a7 80%, #006064 100%);
+    background-size: 400% 400%;
+    animation: gradientMove 20s ease-in-out infinite;
+}
+
+@keyframes gradientMove {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* ========== PARTÍCULAS DE GELO ========== */
+.snowflakes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.snowflake {
+    position: absolute;
+    top: -10px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1em;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-10vh) rotate(0deg) scale(0.5);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(110vh) rotate(720deg) scale(1.2);
+        opacity: 0.2;
+    }
+}
+
+.snowflake:nth-child(1) { left: 5%; animation-duration: 12s; font-size: 0.8em; }
+.snowflake:nth-child(2) { left: 15%; animation-duration: 15s; font-size: 1.2em; }
+.snowflake:nth-child(3) { left: 25%; animation-duration: 10s; font-size: 0.6em; }
+.snowflake:nth-child(4) { left: 35%; animation-duration: 18s; font-size: 1.5em; }
+.snowflake:nth-child(5) { left: 45%; animation-duration: 13s; font-size: 0.9em; }
+.snowflake:nth-child(6) { left: 55%; animation-duration: 16s; font-size: 1.1em; }
+.snowflake:nth-child(7) { left: 65%; animation-duration: 11s; font-size: 0.7em; }
+.snowflake:nth-child(8) { left: 75%; animation-duration: 14s; font-size: 1.3em; }
+.snowflake:nth-child(9) { left: 85%; animation-duration: 17s; font-size: 0.5em; }
+.snowflake:nth-child(10) { left: 95%; animation-duration: 19s; font-size: 1.0em; }
+
+/* ========== TEXTO ARTGELO SOBREPOSTO ========== */
+.hero-title {
+    position: relative;
+    text-align: center;
+    padding: 60px 20px 20px;
+    z-index: 1;
+}
+
+.hero-title h1 {
+    font-size: 6rem;
+    font-weight: 900;
+    letter-spacing: 8px;
+    color: transparent;
+    background: linear-gradient(135deg, #ffffff 0%, #e0f7fa 30%, #80deea 60%, #4dd0e1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 
+        0 5px 20px rgba(0, 150, 136, 0.4),
+        0 10px 40px rgba(0, 150, 136, 0.2),
+        0 15px 60px rgba(0, 150, 136, 0.1);
+    transform: perspective(800px) rotateX(5deg) rotateY(-5deg);
+    transition: transform 0.5s ease;
+    animation: floatTitle 6s ease-in-out infinite;
+}
+
+@keyframes floatTitle {
+    0%, 100% { transform: perspective(800px) rotateX(5deg) rotateY(-5deg) translateY(0); }
+    50% { transform: perspective(800px) rotateX(5deg) rotateY(-5deg) translateY(-10px); }
+}
+
+.hero-title h1:hover {
+    transform: perspective(800px) rotateX(0) rotateY(0) scale(1.02);
+}
+
+.hero-title .subtitle {
+    font-size: 1.5rem;
+    color: var(--azul-escuro);
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
+    margin-top: -10px;
+    letter-spacing: 4px;
+}
+
+/* ========== BARRA DE SERVIÇOS ========== */
+.servicos-bar {
+    background: rgba(0, 96, 100, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 20px 0;
+    margin: 30px 0;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px var(--sombra);
+    position: relative;
+    z-index: 2;
+}
+
+.servicos-bar .container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.servico-item {
+    text-align: center;
+    padding: 15px 25px;
+    color: var(--branco);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    flex: 1;
+    min-width: 120px;
+    max-width: 180px;
+}
+
+.servico-item:hover {
+    transform: translateY(-5px) scale(1.05);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.servico-item .icon {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.servico-item .label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.servico-item .badge-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff6b6b;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+/* ========== CARDS ========== */
+.card-gelo {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px var(--sombra);
+    transition: all 0.4s ease;
+    overflow: hidden;
+}
+
+.card-gelo:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 40px var(--sombra-forte);
+}
+
+.card-gelo .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card-gelo:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.card-gelo .card-body {
+    padding: 20px;
+}
+
+.card-gelo .card-title {
+    color: var(--azul-escuro);
+    font-weight: 700;
+}
+
+.card-gelo .card-text {
+    color: #555;
+}
+
+/* ========== FORMULÁRIOS ========== */
+.form-gelo {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 32px var(--sombra);
+}
+
+.form-gelo .form-control,
+.form-gelo .form-select {
+    border-radius: 10px;
+    border: 2px solid var(--azul-claro);
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.form-gelo .form-control:focus,
+.form-gelo .form-select:focus {
+    border-color: var(--azul-medio);
+    box-shadow: 0 0 0 4px rgba(0, 151, 167, 0.1);
+}
+
+.form-gelo .form-label {
+    color: var(--azul-escuro);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.form-gelo .btn-primary {
+    background: var(--azul-escuro);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.form-gelo .btn-primary:hover {
+    background: var(--azul-profundo);
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(0, 96, 100, 0.3);
+}
+
+/* ========== TABELAS ========== */
+.table-gelo {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px var(--sombra);
+}
+
+.table-gelo thead {
+    background: var(--azul-escuro);
+    color: var(--branco);
+}
+
+.table-gelo thead th {
+    border: none;
+    padding: 15px;
+}
+
+.table-gelo tbody tr {
+    transition: background 0.3s ease;
+}
+
+.table-gelo tbody tr:hover {
+    background: rgba(0, 151, 167, 0.05);
+}
+
+/* ========== BOTÕES ========== */
+.btn-gelo {
+    background: var(--azul-medio);
+    color: var(--branco);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-gelo:hover {
+    background: var(--azul-escuro);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 96, 100, 0.3);
+    color: var(--branco);
+}
+
+.btn-gelo-outline {
+    background: transparent;
+    color: var(--azul-escuro);
+    border: 2px solid var(--azul-escuro);
+    border-radius: 10px;
+    padding: 10px 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-gelo-outline:hover {
+    background: var(--azul-escuro);
+    color: var(--branco);
+    transform: translateY(-2px);
+}
+
+.btn-whatsapp {
+    background: #25D366;
+    color: var(--branco);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-whatsapp:hover {
+    background: #128C7E;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    color: var(--branco);
+}
+
+/* ========== NAVBAR ========== */
+.navbar-artgelo {
+    background: rgba(0, 96, 100, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px var(--sombra);
+    z-index: 1000;
+}
+
+.navbar-artgelo .navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--branco);
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
+}
+
+.navbar-artgelo .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    padding: 10px 20px !important;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+}
+
+.navbar-artgelo .nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.navbar-artgelo .nav-link.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--branco) !important;
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* ========== FOOTER ========== */
+footer {
+    background: rgba(0, 64, 64, 0.95) !important;
+    backdrop-filter: blur(10px);
+    padding: 40px 0 20px;
+    margin-top: auto;
+    position: relative;
+    z-index: 1;
+}
+
+footer .social-icons a {
+    color: var(--branco);
+    font-size: 1.5rem;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+footer .social-icons a:hover {
+    transform: translateY(-3px) scale(1.1);
+    color: var(--azul-claro);
+}
+
+/* ========== RESPONSIVIDADE ========== */
+@media (max-width: 992px) {
+    .hero-title h1 {
+        font-size: 3.5rem;
+        letter-spacing: 4px;
+    }
+    
+    .servico-item {
+        min-width: 100px;
+        max-width: 140px;
+        padding: 10px 15px;
+    }
+    
+    .servico-item .icon {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title h1 {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+    }
+    
+    .hero-title .subtitle {
+        font-size: 1rem;
+    }
+    
+    .servicos-bar .container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .servico-item {
+        width: 100%;
+        max-width: none;
+        padding: 15px;
+    }
+    
+    .form-gelo {
+        padding: 20px;
+    }
+    
+    .table-responsive {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title h1 {
+        font-size: 2rem;
+    }
+    
+    .navbar-artgelo .navbar-brand {
+        font-size: 1.4rem;
+    }
+}
+
+/* ========== ANIMAÇÕES ========== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-in {
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+/* ========== UTILITÁRIOS ========== */
+.text-gelo {
+    color: var(--azul-medio);
+}
+
+.text-gelo-escuro {
+    color: var(--azul-escuro);
+}
+
+.bg-gelo {
+    background: linear-gradient(135deg, var(--azul-gelo), var(--azul-claro));
+}
+
+.shadow-gelo {
+    box-shadow: 0 4px 20px rgba(0, 150, 136, 0.2);
+}
+
+.border-gelo {
+    border: 2px solid var(--azul-claro);
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ========== MAPA ========== */
+.mapa-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px var(--sombra);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.mapa-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* ========== BADGES DE STATUS ========== */
+.badge-status {
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.status-pendente { background: #ffd700; color: #333; }
+.status-confirmado { background: #2196F3; color: white; }
+.status-em_rota { background: #FF9800; color: white; }
+.status-entregue { background: #4CAF50; color: white; }
+.status-cancelado { background: #f44336; color: white; }

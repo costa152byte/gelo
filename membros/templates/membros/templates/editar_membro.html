@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Membro - Artgelo{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h4 mb-4">Editar Membro: {{ object.nome_completo }}</h1>
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {% include 'membros/_form_membro.html' %}
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="{% url 'membros:listar_membro' %}" class="btn btn-outline-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
