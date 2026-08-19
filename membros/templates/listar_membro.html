@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Membros - Artgelo{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Membros</h1>
+    <a href="{% url 'membros:criar_membro' %}" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Novo Membro
+    </a>
+</div>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-md-6">
+        <input type="text" name="busca" value="{{ busca }}" class="form-control"
+               placeholder="Buscar por nome...">
+    </div>
+    <div class="col-md-3">
+        <select name="status" class="form-select">
+            <option value="">Todos os status</option>
+            <option value="ativo" {% if status_filtro == 'ativo' %}selected{% endif %}>Ativos</option>
+            <option value="inativo" {% if status_filtro == 'inativo' %}selected{% endif %}>Inativos</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-outline-secondary w-100">Filtrar</button>
+    </div>
+</form>
+
+{% if membros %}
+<div class="table-responsive">
+    <table class="table table-hover bg-white">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+                <th>Tipo</th>
+                <th>Status</th>
+                <th>Cadastro</th>
+                <th class="text-end">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for membro in membros %}
+            <tr>
+                <td>{{ membro.nome_completo }}</td>
+                <td>{{ membro.email }}</td>
+                <td>{{ membro.telefone|default:"-" }}</td>
+                <td>{{ membro.get_tipo_membro_display }}</td>
+                <td>
+                    {% if membro.status %}
+                        <span class="badge bg-success">Ativo</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Inativo</span>
+                    {% endif %}
+                </td>
+                <td>{{ membro.data_cadastro|date:"d/m/Y" }}</td>
+                <td class="text-end">
+                    <a href="{% url 'membros:editar_membro' membro.pk %}" class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a href="{% url 'membros:deletar_membro' membro.pk %}" class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if is_paginated %}
+<nav>
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}&busca={{ busca }}&status={{ status_filtro }}">Anterior</a>
+            </li>
+        {% endif %}
+        <li class="page-item disabled">
+            <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+        </li>
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}&busca={{ busca }}&status={{ status_filtro }}">Próxima</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+{% else %}
+<div class="alert alert-info">Nenhum membro encontrado.</div>
+{% endif %}
+{% endblock %}
